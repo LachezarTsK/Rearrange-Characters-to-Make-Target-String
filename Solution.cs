@@ -1,42 +1,41 @@
 
-#include <span>
-#include <string>
-#include <limits>
-#include <algorithm>
-using namespace std;
+using System;
 
-class Solution {
+public class Solution
+{
+    static readonly int ALPHABET_SIZE = 26;
+    public int RearrangeCharacters(string availableLetters, string target)
+    {
+        int[] frequencyInAvailableLetters = new int[ALPHABET_SIZE];
+        CalculateFrequency(frequencyInAvailableLetters, availableLetters);
 
-    static const int ALPHABET_SIZE = 26;
+        int[] frequencyInTarget = new int[ALPHABET_SIZE];
+        CalculateFrequency(frequencyInTarget, target);
 
-public:
-    int rearrangeCharacters(const string& availableLetters, const string& target) const {
-        array<int, ALPHABET_SIZE> frequencyInAvailableLetters{};
-        calculateFrequency(frequencyInAvailableLetters, availableLetters);
-
-        array<int, ALPHABET_SIZE> frequencyInTarget{};
-        calculateFrequency(frequencyInTarget, target);
-
-        return calculateMaxNumberOfTargetCopies(frequencyInAvailableLetters, frequencyInTarget);
+        return CalculateMaxNumberOfTargetCopies(frequencyInAvailableLetters, frequencyInTarget);
     }
 
-private:
-    void calculateFrequency(span<int> frequency, string_view source) const {
-        for (const auto& letter : source) {
+    private void CalculateFrequency(int[] frequency, String source)
+    {
+        foreach (int letter in source)
+        {
             ++frequency[letter - 'a'];
         }
     }
 
-    int calculateMaxNumberOfTargetCopies(span<const int>frequencyInAvailableLetters, span<const int> frequencyInTarget) const {
-        int maxNumberOfTargetCopies = numeric_limits<int>::max();
+    private int CalculateMaxNumberOfTargetCopies(int[] frequencyInAvailableLetters, int[] frequencyInTarget)
+    {
+        int maxNumberOfTargetCopies = int.MaxValue;
 
-        for (int letter = 0; letter < ALPHABET_SIZE; ++letter) {
-            if (frequencyInTarget[letter] > 0) {
+        for (int letter = 0; letter < ALPHABET_SIZE; ++letter)
+        {
+            if (frequencyInTarget[letter] > 0)
+            {
                 int numberOfCopies = frequencyInAvailableLetters[letter] / frequencyInTarget[letter];
-                maxNumberOfTargetCopies = min(numberOfCopies, maxNumberOfTargetCopies);
+                maxNumberOfTargetCopies = Math.Min(numberOfCopies, maxNumberOfTargetCopies);
             }
         }
 
         return maxNumberOfTargetCopies;
     }
-};
+}
