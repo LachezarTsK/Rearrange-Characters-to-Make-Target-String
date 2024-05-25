@@ -10,14 +10,14 @@ class Solution {
     static const int ALPHABET_SIZE = 26;
 
 public:
-    int rearrangeCharacters(const string& availablelLetters, const string& target) const {
-        array<int, ALPHABET_SIZE> frequencyInAvailablelLetters{};
-        calculateFrequency(frequencyInAvailablelLetters, availablelLetters);
+    int rearrangeCharacters(const string& availableLetters, const string& target) const {
+        array<int, ALPHABET_SIZE> frequencyInAvailableLetters{};
+        calculateFrequency(frequencyInAvailableLetters, availableLetters);
 
         array<int, ALPHABET_SIZE> frequencyInTarget{};
         calculateFrequency(frequencyInTarget, target);
 
-        return calculateMaxNumberOfTargetCopies(frequencyInAvailablelLetters, frequencyInTarget);
+        return calculateMaxNumberOfTargetCopies(frequencyInAvailableLetters, frequencyInTarget);
     }
 
 private:
@@ -27,12 +27,12 @@ private:
         }
     }
 
-    int calculateMaxNumberOfTargetCopies(span<const int>frequencyInAvailablelLetters, span<const int> frequencyInTarget) const {
+    int calculateMaxNumberOfTargetCopies(span<const int>frequencyInAvailableLetters, span<const int> frequencyInTarget) const {
         int maxNumberOfTargetCopies = numeric_limits<int>::max();
 
         for (int letter = 0; letter < ALPHABET_SIZE; ++letter) {
             if (frequencyInTarget[letter] > 0) {
-                int numberOfCopies = frequencyInAvailablelLetters[letter] / frequencyInTarget[letter];
+                int numberOfCopies = frequencyInAvailableLetters[letter] / frequencyInTarget[letter];
                 maxNumberOfTargetCopies = min(numberOfCopies, maxNumberOfTargetCopies);
             }
         }
